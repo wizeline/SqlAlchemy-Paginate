@@ -1,17 +1,18 @@
 import re
 
-try:  # for pip >= 10
-    from pip._internal.req import parse_requirements
-except ImportError:  # for pip <= 9.0.3
-    from pip.req import parse_requirements
-
 from setuptools import setup, find_packages
 
-
-def requirements(filename):
-    reqs = parse_requirements(filename, session=False)
-    return [str(r.req) for r in reqs]
-
+dev_requires = [
+    'coverage==4.1b2',
+    'flake8==2.5.4',
+    'flake8-debugger==1.4.0',
+    'flake8-quotes==0.2.4',
+    'nose==1.3.7',
+    'pep8-naming==0.3.3',
+    'rednose==1.1.0',
+    'sure==1.2.24',
+    'factory-boy==2.10.0'
+]
 
 def get_version():
     with open('sqlalchemy_pagination/__init__.py', 'r') as f:
@@ -36,9 +37,11 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3'
     ],
-    tests_require=requirements('requirements-dev.txt'),
-    install_requires=requirements('requirements.txt'),
+    tests_require=dev_requires,
+    install_requires=[
+        'SqlAlchemy'
+    ],
     extras_require={
-        'dev': requirements('requirements-dev.txt')
+        'dev': dev_requires
     }
 )
